@@ -17,15 +17,24 @@ piece, hosted on tylermartins.com.
 - Storage: flat JSON files today. Intended future move to a cloud database.
 
 ## Conventions specific to this project
-- Nothing beyond the global CLAUDE.md yet. Add here as patterns emerge (footballd3
-  component structure, view layout, JSON organization).
+- Documentation gate: `scripts/check_docs.sh` (100% Python docstrings via
+  interrogate, JSDoc on every exported JS function, README.md per footballd3
+  component dir). Wired into a Claude Code Stop hook. See `docs/tooling.md`.
+- Test gate: `scripts/check_tests.sh` (pytest for `statsbomb`, vitest+jsdom for
+  `footballd3`), wired into the same Stop hook alongside the docs gate. Python
+  tests live in a mirrored `tests/unit`/`tests/integration` tree; JS tests are
+  co-located as `<name>.test.js` next to each component. See `docs/testing.md`.
 
 ## Modeling guardrails
 - Watch for silent overfitting. Always hold out a proper validation set.
 - Flag any leakage between train/test on time-ordered data.
 
 ## Current focus
-- Just shipped the match analysis dashboard.
-- Next step undecided — choosing between: (a) addressing tech debt, (b) building out
-  the component library on tylermartins.com, or (c) a new view (e.g. last year's
-  Chelsea Vizathon on player fitness management).
+- Shipped the match analysis dashboard.
+- Chose (c): a new view — Player Match Analysis (any non-GK player in the Euro
+  2024 Final, selectable, not just one hardcoded player). football-analytics side
+  (Python extractors + footballd3 component extensions/new components) is built
+  and merged to a `player-match-analysis` branch, with a real test suite backing
+  it. Explicitly NOT yet built: the tylermartins.com wiring (page route, React
+  panels, player selector UI) — deferred to a future Claude Design → Claude Code
+  handoff once this branch is pushed.
