@@ -31,11 +31,10 @@ piece, hosted on tylermartins.com.
 
 ## Current focus
 - Shipped the match analysis dashboard.
-- Player Match Analysis (any non-GK player in the Euro 2024 Final, selectable):
-  football-analytics side is now fully built on branch `player-match-analysis`
-  (committed locally, not yet pushed/reviewed) — all Python extractors and all
-  footballd3 components the design handoff called for, including the ones a
-  prior session's "built and merged" note undersold (playerStatCards,
-  goalMouthShotPanel, passSonar, actionFeed, highlightReel, lineupSelector all
-  didn't actually exist yet; this pass built them). Next: tylermartins.com
-  wiring (page route, React panels, shared scrub/hover state, mobile overlay).
+- Player Match Analysis (any non-GK player in the Euro 2024 Final, selectable)
+  is fully built end-to-end and manually verified working in-browser: both
+  the football-analytics side (extractors + footballd3 components) and the
+  tylermartins.com side (`/football/player-match-analysis` route, panels,
+  shared state, mobile overlay, e2e tests) are done. Both repos committed
+  locally on a `player-match-analysis` branch, neither pushed — next step is
+  your review, then push + PR.
