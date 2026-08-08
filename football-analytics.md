@@ -32,9 +32,8 @@ piece, hosted on tylermartins.com.
 ## Current focus
 - Shipped the match analysis dashboard.
 - Player Match Analysis (any non-GK player in the Euro 2024 Final, selectable)
-  is fully built end-to-end and manually verified working in-browser: both
-  the football-analytics side (extractors + footballd3 components) and the
-  tylermartins.com side (`/football/player-match-analysis` route, panels,
-  shared state, mobile overlay, e2e tests) are done. Both repos committed
-  locally on a `player-match-analysis` branch, neither pushed — next step is
-  your review, then push + PR.
+  is fully built end-to-end, including a first browser-review fix pass (SSR
+  crash, heatmap orientation bug, goal-net visual, highlight reel styling,
+  a 900-1023px breakpoint overlap). All gates green (pytest, vitest, docs,
+  eslint, tsc, e2e). Both repos committed locally on a `player-match-analysis`
+  branch, neither pushed — next step is your review, then push + PR.
