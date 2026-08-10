@@ -4,6 +4,20 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-09 — Team-colored every chart in the Player Match Analysis popup
+  (cumulative xT, territory pitch markers/heatmap/hull, pass sonar,
+  goal-mouth, action feed glyphs, popup header avatar/badge) — each now
+  renders in the selected player's true team color (Spain red / England
+  blue) instead of the generic focal/secondary tokens; buttons keep focal.
+  Moved the cross-link hover-highlight color from secondary to focal, since
+  secondary is identical to England's true color in light mode and would've
+  been invisible against an England player's chart. Also fixed a real gap:
+  `/football/player-match-analysis` had been fully built all session but
+  was reachable only by typing the URL — added it to the home page and
+  `/football` section index, matching the existing dashboard page's nav
+  pattern exactly, plus a breadcrumb label. tsc/eslint/8-8 e2e/145 vitest
+  all green; committed locally on both repos' player-match-analysis
+  branches, still unpushed.
 - 2026-08-09 — Fifth browser-review round: fixed a real state-leak bug where
   the new combined Timeline card's Play kept running after switching
   players (its D3 reel controller's setInterval was never stopped on
