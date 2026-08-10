@@ -4,6 +4,19 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-09 — Added a 1×/2×/4× pace multiplier to the Timeline card
+  (Highlights and All-events modes both benefit, All-events especially).
+  Found and fixed a real bug while wiring it up: highlightReel.js's
+  `update({stepDurationMs})` only reassigned the variable a running
+  `setInterval` had already captured by value, so changing speed mid-play
+  silently did nothing until the *next* fresh Play press — a plain JS
+  interval can't retroactively change its own delay. Fixed by extracting
+  the tick logic into a shared `startTimer()` that both `play()` and a
+  live speed change now call, clearing and rescheduling the timer without
+  resetting the current moment or playing state. tsc/eslint/8-8 e2e/148
+  vitest all green; committed locally on both repos' player-match-analysis
+  branches, still unpushed. This was flagged as likely the last change for
+  this feature.
 - 2026-08-09 — Team-colored every chart in the Player Match Analysis popup
   (cumulative xT, territory pitch markers/heatmap/hull, pass sonar,
   goal-mouth, action feed glyphs, popup header avatar/badge) — each now
