@@ -73,6 +73,14 @@ Sleeper's public docs cover `sport=nfl` only. Everything below was measured.
 - Never invent a rank. Where there's no data (GK, endgame fallback) the UI says so.
 
 ## Draft-day operational notes
+- **Connect retries 4 times before complaining**, and only for network-layer failures — a
+  404 on the league id fails identically every time, so it reports at once. A transient
+  blip that would once have dumped you to an error banner now self-heals silently.
+  Observed at least one real transient failure against Sleeper that was not reproducible
+  a minute later, so this is not theoretical.
+- `fetch` rejects with a bare "Failed to fetch" for offline, DNS, blocked-by-extension and
+  CORS alike. Every error surfaced to the UI names the endpoint and what to check —
+  during a draft there is no time to open devtools.
 - **Keep the tab visible.** Chrome throttles hidden tabs — measured at ~895 ms per tick
   for an empty timer chain — so a backgrounded tab polls about once a minute instead of
   every 6 s, and Chrome eventually freezes it outright and fetches start failing. The app
