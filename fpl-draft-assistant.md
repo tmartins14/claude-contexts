@@ -63,6 +63,40 @@ Sleeper's public docs cover `sport=nfl` only. Everything below was measured.
 - **No goalkeepers in the rankings at all**, but the league starts one. That slot is
   unranked by construction.
 
+## Recommendation engine — the v2 shape
+The v1 engine was "best available, nudged by need", which on this ranking set is barely
+more than a re-sorted list. **Tiers 5 and 7 hold 58 of the 150 players and each spans
+about four rounds**, so consensus rank is nearly flat exactly where most picks happen.
+
+v2 scores on **opportunity cost**: value minus the expected best survivor at that
+position by my next pick. Inside a flat tier every player has near identical value, so
+drop-off and need decide — which is the whole point.
+
+- **Value must decay exponentially** (`exp(-agg / 40)`). Linear normalisation puts the
+  entire top 24 between 0.87 and 1.0, so a 13% value gap loses to a 90% need gap and the
+  engine recommends a tier-2 defender over Bruno Fernandes at pick 1.
+- **Need must be normalised** against the most-needed position before weighting, or raw
+  scores of 0–5 give a 3.2x multiplier swing that buries the #2 player in the draft.
+- **Opponent modelling is free**: every team's roster is in the pick feed and
+  `computeNeeds` is pure, so it runs for opponents unchanged. Blend their need with the
+  observed run rate over the last dozen picks.
+- **Within-position decay weights must sum to 1** — use `(1-d) * d^i`, not `d^i`. Without
+  the `(1-d)` the weights sum to 1.8 and every survival probability is inflated by 80%.
+- **"Two tiers above the next player" means the next player *other than them*.** Comparing
+  against `available[0]` makes the rule unreachable, since that is this player whenever
+  they top the board — the escape silently never fired.
+
+## Marks — one exclusive scale
+🔒 must → ★ lean toward → ⚑ lean away → 🚫 never. Stored as one `playerId -> mark` map so
+exclusivity is structural. ⚑ is a soft penalty (x0.65), **not** an exclusion — 🚫 is the
+hard one, and it escapes on a 2-tier gap or a 2-round slide.
+
+## Goalkeepers are deferred to the last pick
+GK need is held at zero until the final pick; on that pick, if the slot is empty, the
+shortlist shows keepers only. ~122 keepers at EPL clubs against at most 8 taken, so
+waiting is free. The first mock draft ended with **no goalkeeper at all** — that is the
+failure this exists to prevent, and it also surfaced a bench that read "-1 of 6 free".
+
 ## Conventions specific to this project
 - Every tunable lives in `js/config.js` — the engine is a heuristic that gets tuned live,
   so there is exactly one file to open mid-draft.
