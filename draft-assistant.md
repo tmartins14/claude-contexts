@@ -31,6 +31,22 @@ Streamlit's rerun model fights a background poller.
   consensus rank and joins tiers/points from the position files.
 - One active league per session (my drafts don't overlap). Crosswalk built once, shared.
 
+## Yahoo API access is gated (found 2026-08-12)
+Yahoo **retired the "Fantasy Sports" permission checkbox** in the developer console. The
+API Permissions section is now empty for every app, and creating a new app does not help.
+Access is granted per-application by a human review at
+<https://sports.yahoo.com/developer/access/> — read-only; write access is not offered.
+
+Until approved, OAuth succeeds and issues a perfectly valid token, but every fantasy
+endpoint returns 401 `additional_authorization_required`. That error means "not approved
+yet", not "bad credentials" — the tool translates it into the application link so the
+failure isn't a mystery.
+
+**Consequence for planning:** approval lead time is now the longest pole on live sync, and
+it gates the crosswalk (needs Yahoo's player universe), the settings pull, and draft-day
+serving. All offline work — rankings, profiles, analytics, replay harness — is unaffected
+and was built without it.
+
 ## Hard rules
 - **Never commit rankings CSVs.** They're paid member content; redistributing them in a
   public repo breaks the provider's terms. `data/` is gitignored; only a synthetic

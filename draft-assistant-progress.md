@@ -4,6 +4,15 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-12 — Yahoo OAuth working end to end (two-step, no-TTY flow; token caches and
+  auto-refreshes). Discovered Yahoo has **retired the Fantasy Sports permission checkbox**:
+  API access is now a human-reviewed application at sports.yahoo.com/developer/access/.
+  Live sync is blocked on that approval — a valid token still 401s with
+  `additional_authorization_required` until granted. Translated that error into the
+  application steps, and rewrote the README setup section around the new gate. Offline
+  path (rankings, analytics, replay harness) is unaffected. Also hardened auth: split
+  authorization into two non-interactive commands, and silenced yahoo_oauth's DEBUG
+  logging, which was printing the client id into logs on every run.
 - 2026-08-11 — First build pass shipped, spec milestones 0–5: repo scaffolded with data
   and secret hygiene from the first commit, Yahoo OAuth + settings pull with scoring
   variant and QB context derived (not configured), rankings loader/normalizer with
