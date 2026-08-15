@@ -103,6 +103,22 @@ carve-outs: DESIGN.md § Color & kits.
   at 1024px (tablet-2col × site rail's `lg:` coinciding). Full postmortem: DESIGN.md
   § Responsive tiers.
 
+## `useTheme()` — a recurring gotcha, bit the codebase twice already
+next-themes' `resolvedTheme` is `undefined` during SSR and the first client render
+(before the stored/system preference resolves) — SSR always renders as if the theme
+were "light". Reading `resolvedTheme` **directly into JSX** (an inline `style` color,
+a swatch background) is a real hydration-mismatch bug for any dark-theme visitor: the
+server HTML says light, the client's first render says dark, React logs a mismatch and
+gives up patching that subtree. Already happened twice — `PlayerMatchAnalysisClient.tsx`
+first, then `TeamColumnCard.tsx`/`MomentumBarPanel.tsx` (fix PR #17, found via a real
+console error reported in dev, not a review catch). **The rule:** if a component reads
+`resolvedTheme` to compute something that renders in JSX (not just inside a
+`useEffect` driving D3's own imperative, client-only render), gate it behind a
+`mounted` boolean set `true` in a `useEffect` — same pattern in all three files, plus
+`ThemeToggle.tsx`. A theme-derived value that's only used behind interaction state
+guaranteed `null`/`false` on first render (e.g. `ShotMapPanel`'s hover-only color) is
+safe without the guard — checked case by case, not applied reflexively everywhere.
+
 ## Accessibility (Ticket 3)
 - `--faint` re-picked on both themes for real WCAG AA contrast (5.36–5.74:1 light,
   4.65–5.51:1 dark), measured against actual surfaces, not eyeballed. Keep

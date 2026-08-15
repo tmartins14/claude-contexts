@@ -6,6 +6,16 @@ for current focus and `style.md` for design tokens.
 
 ## Log
 
+2026-08-15 — Fix PR #17 opened (unrelated to Ticket 3, reported live in dev by user):
+a real hydration mismatch for dark-theme visitors — `TeamColumnCard` and
+`MomentumBarPanel` read next-themes' `resolvedTheme` straight into JSX instead of
+gating it behind a `mounted` check, so SSR (always "light") disagreed with a real
+dark-theme visitor's first client render. Same bug already fixed once before in
+`PlayerMatchAnalysisClient.tsx` — applied the same established `mounted`-guard pattern.
+Audited every other chart panel's `useTheme()` usage; only these two had the
+unguarded-in-JSX pattern. New permanent regression test in
+`e2e/dashboard-responsive.spec.ts`, proven to actually catch it via revert-and-retest.
+
 2026-08-15 — Ticket 3 (Accessibility & social metadata) PR #16 opened, not yet merged:
 contrast-fixed `--faint`, sitewide `:focus-visible` rings, ARIA roles/labels across every
 D3 chart panel, a shared OG image + real favicon/apple-icon, and OG/Twitter metadata on
