@@ -34,6 +34,17 @@ Light / Dark:
 Use Tailwind utilities bound to these: bg-focal, text-muted, border-strong, bg-pitch, etc.
 shadcn semantic vars (--primary, --card, --ring…) are already mapped onto these tokens.
 
+**Color law (Ticket 2):** warmth in the shell, precision in the ink. focal/secondary
+are chrome ONLY — never a data mark, never a team color (that was the flip bug: 3
+panels had home=focal/away=secondary, 2 had it backwards, and england's chart-theme hex
+byte-for-byte collided with `secondary`). Every team-data mark reads `lib/kits.ts`'s
+`kitEncoding(side, mode)` instead — one seeded kit table (Spain red `#C60B1E` /
+England navy `#001E3C`, England's white shirt being unusable as ink), a two-tone chip
+(`kitChip`) carrying full identity separately from the single-hue data marks, a ΔE
+clash rule for future matches, and a warm-anchored heat scale (`HEAT_SCALE`, cream →
+amber) decoupled from team identity. Full detail + the gallery/highlight-accent scope
+carve-outs: DESIGN.md § Color & kits.
+
 ## Typography
 - Display: Fraunces (serif), weight 900, optical size 144 — the `.display` class.
   Use for headlines / hero numbers, the editorial voice.
