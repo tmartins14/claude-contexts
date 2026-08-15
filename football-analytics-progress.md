@@ -4,6 +4,18 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-15 — Fixed goalMouthShotPanel.js and cumulativeXtChart.js hardcoding
+  light-theme hex literals for their background rect and several supporting
+  strokes/text (legend, ground line, off-target strip, axis ticks, tooltip) —
+  reported live on tylermartins.com's player-match-analysis page as "still has
+  a white background" in dark mode. Fixed by switching to `var(--token,
+  #fallback)`, matching the pattern already used correctly in
+  cumulativeXgChart.js. Bumped footballd3 to **0.1.4 — not yet published to
+  npm**; tylermartins.com's Vercel builds install from the registry, not the
+  local workspace symlink, so this fix won't reach production until it's
+  published and the site's dependency is bumped. Committed to
+  `player-match-analysis` branch (`aebc8f7`), pushed.
+
 - 2026-08-09 — Added a 1×/2×/4× pace multiplier to the Timeline card
   (Highlights and All-events modes both benefit, All-events especially).
   Found and fixed a real bug while wiring it up: highlightReel.js's
