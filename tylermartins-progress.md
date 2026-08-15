@@ -5,6 +5,17 @@ diff-by-diff changelog — see `tylermartins-progress.md`'s companion `tylermart
 for current focus and `style.md` for design tokens.
 
 ## Log
+- 2026-08-15 — Ticket 4 (Content model, async states, copy) PR #18 opened, not
+  yet merged: `concept{}` field on the component schema (no render surface,
+  deliberately deferred), real git-derived `publishedDate` backfill for all 16
+  components (was one flat placeholder, made the gallery sort a no-op), a
+  shared async state kit (skeleton/error/empty) with a new distinct empty
+  state for near-zero-event players, and a tightened homepage H1 (Tyler's pick
+  from the bundle's options: "I turn new football-analytics concepts into
+  tools you can use."). All 4 tickets from the original remediation plan are
+  now in PR — #16 (Ticket 3), #17 (hydration fix), #18 (Ticket 4) — pending
+  merge, plus #(bump/footballd3-0.1.4) blocked on an npm publish only Tyler can
+  do (see football-analytics-progress.md).
 
 2026-08-15 — Fix PR #17 opened (unrelated to Ticket 3, reported live in dev by user):
 a real hydration mismatch for dark-theme visitors — `TeamColumnCard` and
