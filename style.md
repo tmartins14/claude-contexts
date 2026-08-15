@@ -39,16 +39,31 @@ shadcn semantic vars (--primary, --card, --ring…) are already mapped onto thes
   Use for headlines / hero numbers, the editorial voice.
 - Body: Geist Sans (--font-body).
 - Mono: Geist Mono — stats, tabular figures, code.
+- Type ramp (Ticket 1a): every text node uses a ramp token, never `text-[Npx]` —
+  `text-display-1..4` (Fraunces sizes, clamp/34/24/20), `text-lg/base/sm` (Geist Sans,
+  16/14/13), `text-mono-base/sm/xs` (Geist Mono, 12/11/10 — `mono-xs` reserve-only,
+  never the sole label on an interactive control). Full table + rationale: DESIGN.md § Type.
 
 ## Shape & motion
 - Radii: sm 4px, base 6px, lg 10px, xl 12px. Base token --radius 0.625rem.
-- Dark mode via data-theme + next-themes; body transitions bg/color at .25s.
-- Animation via tw-animate-css. Keep motion purposeful — reveal/transition to guide
-  the eye through the analysis, not decoration.
+- Dark mode via data-theme + next-themes; body transitions bg/color at --motion-base
+  (200ms) / --ease-standard.
+- Motion tokens (Ticket 1c): --motion-fast/base/slow (120/200/400ms), --ease-standard/
+  out/in. Referenced as `duration-[var(--motion-*)]` (Tailwind has no named-duration
+  scale) and plain `ease-standard`/`ease-out`/`ease-in` utilities. Global
+  `prefers-reduced-motion: reduce` rule collapses everything to ~1ms. Tool pages get
+  functional motion only; Piece pages (not built) get editorial motion. Full detail:
+  DESIGN.md § Motion.
+- A lint rule (`eslint-rules/no-arbitrary-design-values.mjs`) fails the build on new
+  arbitrary text/spacing/duration/ease values — don't reach for `[Npx]` brackets.
 
 ## Layout notes
 - Fixed TopBar height 60px (--topbar-h); mobile sticky headers offset by it.
 - Site nav rail is w-60 (240px) at lg:.
-- Match dashboard: 3-column grid above the `dash` breakpoint (80rem), tabbed mobile
-  stack below. Center column is a fixed 360px. The 80rem threshold is empirical (rail
-  + fixed columns clip below ~1000px content width) — don't "simplify" it to 720px.
+- Match dashboard has **three** responsive tiers, not two (Ticket 1d): mobile tabs
+  below 768px (`--breakpoint-tablet`), a real tablet tier 768–1279px (stacked-dense,
+  all three cards visible, no tabs), 3-column grid at/above 1280px (`--breakpoint-dash`,
+  still empirical — rail + true-scale pitches clip below ~1000px content width, don't
+  "simplify" it down). Center column is `minmax(300px, 360px)`, not a hard 360px.
+  Named layout constants (breakpoints, widths, the pitch pxPerYard cap) all live in
+  `app/globals.css`'s `@theme` block — full table: DESIGN.md § Spacing & layout constants.
