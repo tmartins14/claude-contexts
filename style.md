@@ -76,9 +76,20 @@ carve-outs: DESIGN.md § Color & kits.
 - Fixed TopBar height 60px (--topbar-h); mobile sticky headers offset by it.
 - Site nav rail is w-60 (240px) at lg:.
 - Match dashboard has **three** responsive tiers, not two (Ticket 1d): mobile tabs
-  below 768px (`--breakpoint-tablet`), a real tablet tier 768–1279px (stacked-dense,
-  all three cards visible, no tabs), 3-column grid at/above 1280px (`--breakpoint-dash`,
-  still empirical — rail + true-scale pitches clip below ~1000px content width, don't
-  "simplify" it down). Center column is `minmax(300px, 360px)`, not a hard 360px.
-  Named layout constants (breakpoints, widths, the pitch pxPerYard cap) all live in
-  `app/globals.css`'s `@theme` block — full table: DESIGN.md § Spacing & layout constants.
+  below 768px (`--breakpoint-tablet`), a real tablet tier 768–1279px, 3-column grid
+  at/above 1280px (`--breakpoint-dash`, still empirical — rail + true-scale pitches
+  clip below ~1000px content width, don't "simplify" it down). Center column is
+  `minmax(300px, 360px)`, not a hard 360px. Named layout constants (breakpoints,
+  widths, the pitch pxPerYard cap) all live in `app/globals.css`'s `@theme` block —
+  full table: DESIGN.md § Spacing & layout constants.
+- **Tablet tier cards are width-capped** (`--size-tablet-card`, 420px), never
+  full-bleed to the viewport — the first cut (stacked, full-width cards) was a real
+  shipped bug: the pitch inside stays capped at its desktop size regardless of
+  container width, so a wide card was just wasted whitespace, reported as both
+  "too large" and "doesn't fit the screen." Single column below 900px
+  (`--breakpoint-tablet-2col`), two-up (team cards side by side, match card
+  spanning below) at/above it. Use plain `1fr` grid tracks + per-card `max-width`
+  for this, not a content-sized `minmax()` track — that caused a real
+  ResizeObserver feedback loop with the pitch panels' own width measurement right
+  at 1024px (tablet-2col × site rail's `lg:` coinciding). Full postmortem: DESIGN.md
+  § Responsive tiers.
