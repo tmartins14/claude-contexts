@@ -153,3 +153,20 @@ safe without the guard — checked case by case, not applied reflexively everywh
   mixed serif/bold text the first time this shipped. Never use a generic family
   keyword in an `ImageResponse` tree — register and name every font actually used.
   Full postmortem: DESIGN.md § Social & metadata.
+
+## Content model (Ticket 4)
+- `ComponentEntry` (`lib/components.ts`) has an optional `concept{name/source/
+  link/summary}` field — lineage, where an idea came from. Unpopulated, no
+  render surface yet (deferred to a future Piece page) — exists so it doesn't
+  need retrofitting across 16+ components later.
+- Gallery `publishedDate` was flat (one placeholder date for all 16, making the
+  newest-first sort a no-op) — backfilled with each component's real
+  first-commit date from `football-analytics`' git history. Real data, not
+  fabricated; sort-order-only, never shown as text.
+- Shared async state kit (`components/charts/AsyncState.tsx`): skeleton on
+  `surface`, one-line `muted` mono error, and a distinct empty state for
+  near-zero-event players (< 3 events — a real, expected outcome, never
+  confused with a load failure). Applied to `PlayerMatchAnalysisClient`.
+- Homepage H1 tightened from the generic "Data, made visual and interactive."
+  to "I turn new football-analytics concepts into tools you can use." — Tyler's
+  pick from the bundle's options. Meta description already on-spine, unchanged.
