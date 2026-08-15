@@ -102,3 +102,38 @@ carve-outs: DESIGN.md § Color & kits.
   ResizeObserver feedback loop with the pitch panels' own width measurement right
   at 1024px (tablet-2col × site rail's `lg:` coinciding). Full postmortem: DESIGN.md
   § Responsive tiers.
+
+## Accessibility (Ticket 3)
+- `--faint` re-picked on both themes for real WCAG AA contrast (5.36–5.74:1 light,
+  4.65–5.51:1 dark), measured against actual surfaces, not eyeballed. Keep
+  `lib/chart-theme.ts`'s `faint` in sync with `globals.css`'s `--faint` — they must
+  match, chart labels and DOM text read as the same color.
+- Global `:focus-visible` ring (`--focus-ring` → `--focal`) lives in `@layer
+  utilities` in `globals.css`, not `@layer base` — Tailwind's `outline-none` utility
+  is itself in `@layer utilities`, so a `@layer base` override loses the cascade.
+- Every D3 chart panel got `role="img"` + `aria-label` (pure-picture panels) or
+  `role="region"` (panels with real DOM text screen readers should read directly —
+  don't use `role="img"` there, it hides the text). Live-updating readouts get
+  `aria-live="polite"`; toggle controls get `aria-pressed`.
+- **Known gap, not fixed:** gallery item modal (`ComponentModal.tsx`, Base UI
+  `Dialog`) doesn't trap focus — Tab can escape to background content while open.
+  Flagged, not silently shipped. Full detail: DESIGN.md § Accessibility.
+
+## Social & metadata (Ticket 3)
+- `metadataBase` set in `app/layout.tsx` (real domain) — required for any relative
+  OG/Twitter image URL to resolve.
+- **Nested routes don't inherit `openGraph`/`twitter` fields or the shared
+  `opengraph-image.tsx`** — Next.js metadata merge is shallow per top-level key;
+  a route that declares its own `openGraph` object replaces the parent's entirely
+  (confirmed against `node_modules/next/dist/docs`, not assumed from memory). Any
+  new route with its own `openGraph`/`twitter` must repeat `url`, `siteName`,
+  `locale`, and `images: ["/opengraph-image"]` — don't expect them to fall through
+  from the root layout.
+- OG image (`app/opengraph-image.tsx`, 1200×630) fetches two Google Fonts at
+  render time — Fraunces for the headline, Inter for body text — **each registered
+  under its own real name and referenced by that name**. Satori has no fallback for
+  a generic `"sans-serif"`/`"serif"` keyword: an unregistered family name gets
+  resolved per-glyph against whatever font *is* registered, which silently produced
+  mixed serif/bold text the first time this shipped. Never use a generic family
+  keyword in an `ImageResponse` tree — register and name every font actually used.
+  Full postmortem: DESIGN.md § Social & metadata.
