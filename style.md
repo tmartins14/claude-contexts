@@ -58,6 +58,15 @@ carve-outs: DESIGN.md § Color & kits.
   `display-1`'s viewport-scaled clamp (up to 56px) and read oversized next to the rest
   of the compact header. Big-number role, fixed not fluid; don't reuse `display-1` for
   widget-scale "big numbers" again.
+- **Real bug, already fixed, don't reintroduce**: `cn()` (`lib/utils.ts`) wraps
+  `tailwind-merge`, which doesn't know our custom ramp tokens — a custom `text-*` size
+  class combined with a `text-{color}` class in the same `cn()` call (the completely
+  ordinary `cn("text-mono-sm", isActive ? "text-focal" : "text-muted")` pattern) got
+  silently dropped, and every button using it rendered at the browser's inherited 16px
+  instead of 11px. Fixed once, for every call site, by registering the custom scale via
+  `extendTailwindMerge`. Any *new* custom `@theme` class sharing a prefix with an
+  existing Tailwind group needs the same registration or it's this bug again.
+  Full postmortem: DESIGN.md § Type.
 
 ## Shape & motion
 - Radii: sm 4px, base 6px, lg 10px, xl 12px. Base token --radius 0.625rem.
