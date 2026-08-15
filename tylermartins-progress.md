@@ -6,6 +6,17 @@ for current focus and `style.md` for design tokens.
 
 ## Log
 
+2026-08-15 — Ticket 3 (Accessibility & social metadata) PR #16 opened, not yet merged:
+contrast-fixed `--faint`, sitewide `:focus-visible` rings, ARIA roles/labels across every
+D3 chart panel, a shared OG image + real favicon/apple-icon, and OG/Twitter metadata on
+every route. Two real bugs caught during verification (not just asserted "done"): Satori
+mixing serif/bold glyphs in the OG image because "sans-serif" was never a registered
+font name, and `og:image` silently missing on nested routes because Next.js metadata
+merge is shallow and doesn't cascade file-convention images down the segment tree —
+both confirmed against real rendered output and the vendored Next docs. One known,
+flagged-not-fixed gap: gallery modal doesn't trap focus. Ticket 4 (content model,
+async states, copy) next once this merges.
+
 2026-08-15 — Ticket 2 (Data-ink & color law) merged, plus 3 post-launch fixes: dashboard
 match score sizing (a dedicated `text-score` token, `display-1`'s clamp was reading
 oversized in the compact header), the new tablet tier stretching cards full-width while
