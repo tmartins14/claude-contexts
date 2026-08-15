@@ -54,6 +54,10 @@ carve-outs: DESIGN.md § Color & kits.
   `text-display-1..4` (Fraunces sizes, clamp/34/24/20), `text-lg/base/sm` (Geist Sans,
   16/14/13), `text-mono-base/sm/xs` (Geist Mono, 12/11/10 — `mono-xs` reserve-only,
   never the sole label on an interactive control). Full table + rationale: DESIGN.md § Type.
+- `text-score` (40px, fixed): added after launch — the dashboard match score used
+  `display-1`'s viewport-scaled clamp (up to 56px) and read oversized next to the rest
+  of the compact header. Big-number role, fixed not fluid; don't reuse `display-1` for
+  widget-scale "big numbers" again.
 
 ## Shape & motion
 - Radii: sm 4px, base 6px, lg 10px, xl 12px. Base token --radius 0.625rem.
