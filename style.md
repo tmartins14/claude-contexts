@@ -4,6 +4,18 @@ The look for tylermartins.com and the football-analytics viz. Source of truth fo
 tokens is `tylermartins.com/app/globals.css` (Tailwind v4, CSS-first). This file is
 the human-readable intent — when they diverge, globals.css wins for values.
 
+**Kept in sync with `tylermartins.com/DESIGN.md`** (in-repo, detailed token/rule
+reference, visible without this private repo). Whichever changes, update the other in
+the same edit — this file stays the terse version, DESIGN.md carries the full detail
+(type ramp, spacing scale, motion tokens, kit table, a11y rules, content model).
+
+## Archetypes
+Two page types drive density + motion, not separate knobs:
+- **Tool** pages (dashboards, FootballD3 gallery): dense, functional motion only,
+  chrome recedes.
+- **Piece** pages (editorial concept surfaces): essay-scaffolded, editorial motion
+  allowed. Not built yet — don't create, just don't block it.
+
 ## Character
 Warm editorial / data-journalism. Reference feel: The Pudding, Chelsea Vizathon.
 - Paper, not screen: warm cream backgrounds (#FAF7F0), never stark white.
