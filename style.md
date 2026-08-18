@@ -167,6 +167,6 @@ safe without the guard — checked case by case, not applied reflexively everywh
   `surface`, one-line `muted` mono error, and a distinct empty state for
   near-zero-event players (< 3 events — a real, expected outcome, never
   confused with a load failure). Applied to `PlayerMatchAnalysisClient`.
-- Homepage H1 tightened from the generic "Data, made visual and interactive."
-  to "I turn new football-analytics concepts into tools you can use." — Tyler's
-  pick from the bundle's options. Meta description already on-spine, unchanged.
+- Homepage H1: bundle flagged "Data, made visual and interactive." as generic
+  and offered three tightened alternatives — Tyler reviewed, kept the original.
+  Still "Data, made visual and interactive." Meta description unaffected.
