@@ -167,6 +167,11 @@ safe without the guard — checked case by case, not applied reflexively everywh
   `surface`, one-line `muted` mono error, and a distinct empty state for
   near-zero-event players (< 3 events — a real, expected outcome, never
   confused with a load failure). Applied to `PlayerMatchAnalysisClient`.
+  **Real bug already fixed:** the skeleton's placeholder grids first shipped
+  as bare `grid-cols-3`/`grid-cols-2` — no responsive breakpoints, so the
+  loading flash stayed multi-column and squished on a phone-width popup while
+  the real content collapsed to one column. Any skeleton grid must reuse the
+  same `pma-sm`/`pma-md` tokens as the content it stands in for.
 - Homepage H1: bundle flagged "Data, made visual and interactive." as generic
   and offered three tightened alternatives — Tyler reviewed, kept the original.
   Still "Data, made visual and interactive." Meta description unaffected.
