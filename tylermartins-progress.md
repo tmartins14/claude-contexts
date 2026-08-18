@@ -5,6 +5,14 @@ diff-by-diff changelog — see `tylermartins-progress.md`'s companion `tylermart
 for current focus and `style.md` for design tokens.
 
 ## Log
+- 2026-08-18 — Fixed a real regression reported live ("responsive design is
+  broken") on PR #18: `AsyncSkeleton` (Ticket 4b's loading placeholder)
+  shipped with fixed `grid-cols-3`/`grid-cols-2`, no responsive breakpoints —
+  squished multi-column on a phone-width popup during the loading flash while
+  the real content correctly collapsed to one column. Fixed by matching the
+  same `pma-sm`/`pma-md` tokens the real content uses; new permanent test
+  asserts `gridTemplateColumns` at 390px, proven via revert-and-retest. Only
+  the transient loading state was ever affected, not the final loaded page.
 - 2026-08-15 — Ticket 4 (Content model, async states, copy) PR #18 opened, not
   yet merged: `concept{}` field on the component schema (no render surface,
   deliberately deferred), real git-derived `publishedDate` backfill for all 16
