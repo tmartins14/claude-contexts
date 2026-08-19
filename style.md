@@ -175,3 +175,21 @@ safe without the guard — checked case by case, not applied reflexively everywh
 - Homepage H1: bundle flagged "Data, made visual and interactive." as generic
   and offered three tightened alternatives — Tyler reviewed, kept the original.
   Still "Data, made visual and interactive." Meta description unaffected.
+
+## Player Match Analysis mobile fixes (post-Ticket-4)
+Three real bugs, reported live, each now covered by a regression test proven via
+revert-and-retest:
+- Mobile popup didn't actually cover the roster (`position: absolute` relative to
+  a wrapper whose height collapsed to 0 — predates Ticket 1, confirmed against
+  the pre-remediation baseline). Fixed with `position: fixed` + `inset-0`, no more
+  `scrollIntoView` timing hack.
+- Popup content overflowed horizontally on mobile (missing `min-w-0` on grid/flex
+  wrappers around `useContainerWidth`-driven chart panels) — invisible to a
+  page-level `scrollWidth` check since the popup is `position: fixed`; only the
+  *popup's own* `scrollWidth` caught it. Any new panel in `PopupBody` needs
+  `min-w-0` on its wrapper.
+- Match Contribution cards centered (was left-aligned); same stale hardcoded-color
+  gap as the earlier chart dark-mode fix found and fixed in `playerStatCards.js`
+  while there. Timeline card's toggle groups now visually clustered, with a
+  divider between the highlight-reel and scrub-track zones. Full detail:
+  DESIGN.md § Player Match Analysis — mobile popup fixes + card cleanup.
