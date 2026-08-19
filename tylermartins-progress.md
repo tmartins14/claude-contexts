@@ -5,6 +5,15 @@ diff-by-diff changelog — see `tylermartins-progress.md`'s companion `tylermart
 for current focus and `style.md` for design tokens.
 
 ## Log
+- 2026-08-18 — Tickets 1–4 of the design remediation are all merged to main (PR
+  #11, #12, #16, #18), plus the hydration-mismatch fix (#17). `footballd3` is
+  published to npm at 0.1.4 (was blocked on an expired local npm auth token —
+  `npm login` fixed it), carrying the dark-mode chart fix and the
+  playerStatCards centering/color fix. PR #19 opens the version bump on
+  tylermartins.com itself — verified against the *real* published package
+  (not the workspace symlink): `npm ci` resolves cleanly, `verify-deploy`
+  PASS for the first time this branch has ever actually built. Awaiting
+  merge — that's the last step to get everything live on production.
 - 2026-08-18 — Pushed 3 more fixes to PR #18 (Ticket 4), found reviewing the
   ticket's own changes: mobile popup wasn't actually covering the roster
   (position:absolute anchored to a collapsed-height parent — predates Ticket 1,

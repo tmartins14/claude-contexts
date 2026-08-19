@@ -4,6 +4,13 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-18 — Published `footballd3@0.1.4` to npm (was blocked by an expired
+  local npm auth token; `npm login` resolved it — nothing wrong with the
+  package or its access list, `tmartins14` was already the correct owner).
+  Carries the dark-mode chart fix (goalMouthShotPanel/cumulativeXtChart) and
+  the playerStatCards centering/color fix. tylermartins.com's version bump is
+  PR #19, verified against the real published package.
+
 - 2026-08-18 — Centered playerStatCards.js's stat cards (were left-aligned) and
   fixed the same hardcoded-light-only-color gap as the goalMouthShotPanel/
   cumulativeXtChart fix — #8A8578 was the *stale* pre-Ticket-3c faint value.
