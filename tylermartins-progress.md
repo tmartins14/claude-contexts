@@ -5,6 +5,17 @@ diff-by-diff changelog — see `tylermartins-progress.md`'s companion `tylermart
 for current focus and `style.md` for design tokens.
 
 ## Log
+- 2026-08-18 — Pushed 3 more fixes to PR #18 (Ticket 4), found reviewing the
+  ticket's own changes: mobile popup wasn't actually covering the roster
+  (position:absolute anchored to a collapsed-height parent — predates Ticket 1,
+  confirmed against the pre-remediation baseline), popup content overflowed
+  horizontally on mobile (missing min-w-0 on chart-panel grid wrappers, 118px at
+  375px, invisible to document-level scrollWidth since the popup is
+  position:fixed), and a design pass on the Timeline/Match Contribution cards
+  (centered stat cards, grouped toggles, a divider between the reel and scrub
+  zones — options proposed, Tyler picked). Also fixed a latent dark-mode color
+  bug in playerStatCards.js (football-analytics) while there. All 3 have
+  permanent regression tests, proven via revert-and-retest. Still not merged.
 - 2026-08-18 — Fixed a real regression reported live ("responsive design is
   broken") on PR #18: `AsyncSkeleton` (Ticket 4b's loading placeholder)
   shipped with fixed `grid-cols-3`/`grid-cols-2`, no responsive breakpoints —

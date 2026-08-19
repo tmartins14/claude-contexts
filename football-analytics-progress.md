@@ -4,6 +4,14 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-18 — Centered playerStatCards.js's stat cards (were left-aligned) and
+  fixed the same hardcoded-light-only-color gap as the goalMouthShotPanel/
+  cumulativeXtChart fix — #8A8578 was the *stale* pre-Ticket-3c faint value.
+  Design pass on tylermartins.com's Player Match Analysis page, options
+  proposed and picked by Tyler. Committed + pushed to `player-match-analysis`,
+  folded into the still-unpublished 0.1.4 (no separate bump — see the earlier
+  0.1.4 entry, still blocked on `npm publish`).
+
 - 2026-08-15 — Fixed goalMouthShotPanel.js and cumulativeXtChart.js hardcoding
   light-theme hex literals for their background rect and several supporting
   strokes/text (legend, ground line, off-target strip, axis ticks, tooltip) —
