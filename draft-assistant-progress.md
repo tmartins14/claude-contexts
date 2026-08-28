@@ -4,6 +4,23 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-08-28 — Shipped manual-entry draft mode (`draft-assistant draft`), since Yahoo
+  approval won't land before the draft. A new `draft.yaml` (roster shape, scoring,
+  QB context, league members in snake-slot order) substitutes for the Yahoo settings
+  pull that mode can't use. Picks are typed in by hand via a web typeahead and default-
+  assigned to whoever's on the clock (snake order), with an override for catching up
+  out of order; undo covers mis-entries. No Yahoo code touched — player identity is
+  just the existing (name, position, team) key, with a tiny crc32 id used only because
+  the shared SQLite `Pick` schema wants an int. Also built the two analytics pieces the
+  spec always wanted but hadn't shipped: an opponent forward-sim (full ~200-run Monte
+  Carlo, needs + board-order proxy, no manager tendencies since those need Yahoo
+  history) and a tier+need pick recommendation (bye/risk tiebreakers deliberately
+  deferred). Rankings CSVs hot-reload mid-draft (poll-driven + a manual button) without
+  losing drafted-player state, since that's keyed off the same stable player key.
+  248 tests green, ruff clean; smoke-tested end-to-end in a live browser session
+  (search → record → team-override → undo → rankings reload) against the synthetic
+  sample, catching and fixing one real bug (`style.display=''` silently falling back
+  to a CSS `display:none` rule instead of showing the typeahead results).
 - 2026-08-12 — Yahoo OAuth working end to end (two-step, no-TTY flow; token caches and
   auto-refreshes). Discovered Yahoo has **retired the Fantasy Sports permission checkbox**:
   API access is now a human-reviewed application at sports.yahoo.com/developer/access/.

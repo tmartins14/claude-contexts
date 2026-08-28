@@ -47,6 +47,18 @@ it gates the crosswalk (needs Yahoo's player universe), the settings pull, and d
 serving. All offline work — rankings, profiles, analytics, replay harness — is unaffected
 and was built without it.
 
+**Manual-entry mode fills the gap (added 2026-08-28).** `draft-assistant draft` is a third
+`PickSource`, alongside `ReplaySource` and the blocked `YahooLivePoller`: you watch Yahoo's
+own draft room and type each pick in by hand via a web typeahead, and it's assigned to a
+league member (default: whoever's on the clock in snake order; overridable to catch up).
+Config comes from a new `draft.yaml` (mirrors what Yahoo settings would supply — roster
+shape, scoring, QB context, member names in slot order) since there's no Yahoo settings
+pull to derive it from. No Yahoo code is touched or depended on — player identity in this
+path is just the existing `(name, position, team)` key; the only numeric id involved is a
+tiny crc32 needed purely because the shared SQLite `Pick` schema stores an int, not
+because of anything Yahoo-shaped. This is the intended path for the actual upcoming draft
+if approval doesn't land in time; `serve`/OAuth stay as-is for whenever it does.
+
 ## Hard rules
 - **Never commit rankings CSVs.** They're paid member content; redistributing them in a
   public repo breaks the provider's terms. `data/` is gitignored; only a synthetic
