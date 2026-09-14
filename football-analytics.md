@@ -25,6 +25,17 @@ piece, hosted on tylermartins.com.
   tests live in a mirrored `tests/unit`/`tests/integration` tree; JS tests are
   co-located as `<name>.test.js` next to each component. See `docs/testing.md`.
 
+## AI-engineering work
+- Lives under `ai/` — one self-contained subdirectory per project (code,
+  SPEC/DATA-SPEC/VERIFICATION docs, and any generated output co-located).
+  Consumes `libs/statsbomb` and `libs/footballd3` like `apps/` does, never
+  the reverse. `apps/` is reserved for non-AI deployables.
+- First project: `ai/match_summary/` — auto-written match summaries
+  (structured outcome + free-prose tactics), Module 1 of an "AI Engineering
+  Learning Vault" (Module 2: pressing/transition/set-piece data extractors;
+  Module 3: eval; Module 6: RAG/agent cross-match Q&A — later modules land
+  as their own `ai/<project>/` subdirectories as they're built).
+
 ## Modeling guardrails
 - Watch for silent overfitting. Always hold out a proper validation set.
 - Flag any leakage between train/test on time-ordered data.

@@ -4,6 +4,12 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-09-14 — Created `ai/` as the dedicated home for AI-engineering work;
+  moved `generate_match_summary` (code, SPEC/DATA-SPEC/VERIFICATION docs, and
+  generated output) into `ai/match_summary/`, repurposed `apps/` for non-AI
+  deployables, and updated the docs gate to cover `ai/`. Branch
+  `chore/create-ai-directory`, committed, not yet pushed/PR'd.
+
 - 2026-08-18 — Published `footballd3@0.1.4` to npm (was blocked by an expired
   local npm auth token; `npm login` resolved it — nothing wrong with the
   package or its access list, `tmartins14` was already the correct owner).
