@@ -4,6 +4,32 @@ Append-only. Newest at top. One line per meaningful ship or decision — not per
 Format: `YYYY-MM-DD — <what shipped / what was decided>`
 
 ## Log
+- 2026-10-17 — DATA-SPEC-v3 Parts 0-2 shipped (6 PRs, #22-27, #27 still open
+  for review). Extends the match-summary tactical findings layer with
+  phase-based findings (chance creation, progression, pressing, defending)
+  and a player contribution rating, closing failure classes D10/D11. Part 0's
+  audit surfaced four real decisions (now resolved): reuse the existing
+  `progressive_map` definition rather than v3's draft; backfill all 51 Euro
+  2024 matches locally before building reference data; add `socceraction` as
+  a dependency; both StatsBomb "Won" and "Success In Play" count as a
+  successful tackle/interception. Part 1 built four new tier-1 extractors
+  (raw values only, no labeling — that's Part 4). Found and fixed two real
+  bugs along the way: a `extract_pass_network.py` window-index gap (two subs
+  in the same minute skipped a window without renumbering, crashing
+  `derive_tactical_findings.py`'s last-window check), and `socceraction`'s
+  SPADL converter silently double-flipping every away team's coordinates
+  (StatsBomb data is already per-team-attack-right normalized; the library
+  assumes a physically-fixed frame) — caught by comparing before/after shot
+  locations, would have produced a materially wrong xT grid otherwise. All
+  51 Euro 2024 matches now have complete derived extractor output committed
+  (`data/euro-2024/`, ~40MB); `reference_distributions.json` and
+  `xt_grid_v1.json` built from real data. Part 3 (player contribution,
+  xT-grid-based rating) is next. Also revisited (not changed): the "move to
+  a cloud database" idea in this project's context file — at 40MB, derived,
+  reproducible from StatsBomb's public API, read only by local scripts, this
+  stays committed JSON for now; worth revisiting only if it grows toward the
+  low hundreds of MB or a live multi-match consumer shows up.
+
 - 2026-09-14 — Created `ai/` as the dedicated home for AI-engineering work;
   moved `generate_match_summary` (code, SPEC/DATA-SPEC/VERIFICATION docs, and
   generated output) into `ai/match_summary/`, repurposed `apps/` for non-AI

@@ -13,8 +13,14 @@ piece, hosted on tylermartins.com.
   living inside this repo).
 - Hosting: tylermartins.com
 - Data: StatsBomb free open data for now; will branch out to other sources as new views
-  demand it.
-- Storage: flat JSON files today. Intended future move to a cloud database.
+  demand it. `socceraction` added as a dependency (xT grid fitting).
+- Storage: flat JSON files, committed to the repo for `data/euro-2024/` specifically
+  (derived extractor output only — raw/processed data stays gitignored per
+  `data/README.md`). Revisited 2026-10-17: at ~40MB, derived, reproducible from
+  StatsBomb's public API, and read only by local scripts, this is fine as-is —
+  not moving to a cloud database unless it grows toward the low hundreds of MB
+  or a live multi-match consumer (e.g. tylermartins.com showing all 51 matches,
+  not just the one hand-copied demo) actually shows up.
 
 ## Conventions specific to this project
 - Documentation gate: `scripts/check_docs.sh` (100% Python docstrings via
@@ -41,10 +47,16 @@ piece, hosted on tylermartins.com.
 - Flag any leakage between train/test on time-ordered data.
 
 ## Current focus
-- Shipped the match analysis dashboard.
+- DATA-SPEC-v3 (phase-based tactical findings + player contribution rating,
+  extending the match-summary tactical findings layer, closing failure
+  classes D10/D11). Parts 0-2 shipped (PRs #22-26 merged, #27 open for
+  review): data audit, `socceraction` dependency, four new tier-1 extractors
+  (chance creation, progression, pressing, defending — raw values only),
+  a full backfill of all 51 Euro 2024 matches, and both reference-data files
+  (`reference_distributions.json` tercile cut points, `xt_grid_v1.json`).
+  Part 3 (player contribution: the xT-grid-based rating, replacing
+  model-chosen "key performers") is next. See
+  `docs/task-history/2026-10-data-spec-v3-phase-findings.md` in the repo for
+  full detail.
 - Player Match Analysis (any non-GK player in the Euro 2024 Final, selectable)
-  is fully built end-to-end, including a first browser-review fix pass (SSR
-  crash, heatmap orientation bug, goal-net visual, highlight reel styling,
-  a 900-1023px breakpoint overlap). All gates green (pytest, vitest, docs,
-  eslint, tsc, e2e). Both repos committed locally on a `player-match-analysis`
-  branch, neither pushed — next step is your review, then push + PR.
+  shipped earlier — fully built end-to-end, all gates green.
